@@ -29,7 +29,7 @@ var game = {
 $(document).ready(function(){
 
     $(".character").on("click", function(){
-        if(gameOn === false) {
+        if(game.gameOn === false) {
             game.gameStart();
         } else if(game.activeOpponent === "") {
             //run game method that sets the opponent
