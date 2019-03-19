@@ -1,0 +1,24 @@
+.charset {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.charwrap {
+    margin: .5rem;
+}
+
+.character {
+    height: 150px;
+}
+
+.power {
+    width: inherit;
+    color: black;
+    background-color: white;
+    opacity: 80%;
+    height: 10px;
+    text-align: center;
+    z-index: 1;
+    position: absolute;
+}
