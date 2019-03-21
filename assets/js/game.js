@@ -33,7 +33,7 @@ var game = {
         console.log(this.gameOn);
         //set the character; add constructor logic; move the image to the battlefield
         if (charId === "dw") {
-            this.player = new Character("Dungeon World", 245, 17, charId, healthDiv);
+            this.player = new Character("Dungeon World", 245, 11, charId, healthDiv);
             var charImg = $("#1w").detach();
             charImg.appendTo("#battlefield");
         } else if (charId === "paranoia") {
@@ -69,7 +69,7 @@ var game = {
                 this.activeOpponent = new Opponent("Fate", 333, 50, healthDiv);
                 this.oppHandle = $("#3w").detach();
             } else if (oppId === "dnd") {
-                this.activeOpponent = new Opponent("Dungeons & Dragons", 750, 27, healthDiv);
+                this.activeOpponent = new Opponent("Dungeons & Dragons", 750, 50, healthDiv);
                 this.oppHandle = $("#4w").detach();
             }
 
@@ -126,11 +126,15 @@ var game = {
         }
     },
 
-    gameInit: function (startState) {
+    gameInit: function () {
         this.gameOn = false;
         this.player = "";
         this.availableOpponents = 3;
-        $(document).replaceWith(startState.clone(true));
+       // $("document").replaceWith(startState.clone(true));
+       //$(".character").detach();
+       //$(".character").appendTo("#charset");
+       location.reload(true);
+       $("#charMessage").text("Welcome back! Choose your character.");
 
     },
 }
@@ -162,11 +166,11 @@ $(document).ready(function () {
 
     //restart game
     $(document).on("click", "#restart", function () {
-        game.gameInit(startState);
+        game.gameInit();
         console.log("resetting", game);
     });
 
-    var startState = $(document).clone(true);
+    //var startState = $("document").clone(true);
 
 })
 
