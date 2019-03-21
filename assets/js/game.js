@@ -107,6 +107,7 @@ var game = {
     gameInit: function() {
         this.gameOn = false;
         this.player = "";
+        
     },
 }
 
@@ -135,5 +136,13 @@ $(document).ready(function(){
         game.combatCheck();
     })
 
+    //restart game
+    $(document).on("click", "#restart", function(){
+        game.gameInit();
+        console.log("resetting");
+        $("#document").replaceWith(divClone.clone(true));
+    })
+
+    var divClone = $("#document").clone(true);
 })
 
