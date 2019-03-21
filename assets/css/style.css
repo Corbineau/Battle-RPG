@@ -15,8 +15,9 @@
 #charset {
     display: flex;
     flex-direction: row nowrap;
-    justify-content: flex-end;
+    justify-content: center;
     font-family: 'Courier New', Courier, monospace;
+    border: 1 px dotted black;
 
 }
 
@@ -66,4 +67,5 @@
     flex-flow: row nowrap;
     justify-content: space-around;
     padding: 2rem;
+    border: 1 px dotted black;
 }
