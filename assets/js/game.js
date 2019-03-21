@@ -22,6 +22,7 @@ var game = {
     gameOn: false,
     player: "",
     activeOpponent: "",
+
     
 
     gameStart: function(charId, healthDiv) {
@@ -52,24 +53,24 @@ var game = {
         
     },
 
-    setOppponent: function(oppId) {
+    setOppponent: function(oppId, healthDiv) {
         //check to make sure the player hasn't clicked themselves.
         if(oppId != this.player.id) {
             //set the active opponent; add constructor logic; move the image to the battlefield
             if(oppId === "dw") {
-                this.activeOpponent = new Opponent("Dungeon World", 245, 50);
+                this.activeOpponent = new Opponent("Dungeon World", 245, 50, healthDiv);
                 var charImg = $("#1w").detach();
                 charImg.appendTo("#battlefield");
             } else if (oppId === "paranoia" ) {
-                this.activeOpponent = new Opponent("Fate", 520, 70);
+                this.activeOpponent = new Opponent("Paranoie", 520, 70, healthDiv);
                 var charImg = $("#2w").detach();
                 charImg.appendTo("#battlefield");
             } else if (oppId === "fate" ) {
-                this.activeOpponent = new Opponent("Paranoia", 333, 125);
+                this.activeOpponent = new Opponent("Fate", 333, 125, healthDiv);
                 var charImg = $("#3w").detach();
                 charImg.appendTo("#battlefield");
             } else if (oppId === "dnd") {
-                    this.activeOpponent = new Opponent("Dungeons & Dragons", 750, 75);
+                    this.activeOpponent = new Opponent("Dungeons & Dragons", 750, 75, healthDiv);
                     var charImg = $("#4w").detach();
                 charImg.appendTo("#battlefield");
         }
@@ -80,19 +81,23 @@ var game = {
         //add the attack button
         if(oppId != this.player.id) {
             $("#gameMessage").append("<button id='attack'>attack!</button>");
+
         }
         
     },  
     //fight!
     combat: function() {
-        this.activeOpponent.healthPoints - this.player.attackPower;
-        $("#")
-        this.player.healthPoints - this.activeOpponent.counterAttackPower;
-        this.player.attackPower =+ this.player.attackPower;
+        this.activeOpponent.healthPoints = (this.activeOpponent.healthPoints - this.player.attackPower);
+        this.activeOpponent.healthDiv.text(this.activeOpponent.healthPoints);
+        this.player.healthPoints = (this.player.healthPoints - this.activeOpponent.counterAttackPower);
+        this.player.healthDiv.text(this.player.healthPoints);
+        this.player.attackPower = (this.player.attackPower + this.player.attackPower);
+        console.log(this.player.attackPower);
     },
 
     combatCheck: function() {
-        if(this.player.healthPoints === 0){
+        if(this.player.healthPoints <= 0){
+            this.activeOpponent = "";
             $("#attack").attr("id", "restart").text("restart");
             $("#charMessage").text("Game Over! Click restart to try again.");
 
@@ -111,20 +116,22 @@ $(document).ready(function(){
     $(".character").on("click", function(){
         if(game.gameOn === false) {
             var charId = $(this).attr("id");
-            var healthDiv = $(this).children(".hp").attr("id");
+            var healthDiv = $(`#${$(this).siblings('.hp').attr('id')}`);
             console.log(charId);
             console.log(healthDiv);
             game.gameStart(charId, healthDiv);
             //choose the active opponent
         } else if(game.activeOpponent === "") {
             var oppId = $(this).attr("id");
-            game.setOppponent(oppId);
+            var healthDiv = $(`#${$(this).siblings('.hp').attr('id')}`);
+            game.setOppponent(oppId, healthDiv);
             
         } 
     })
     //combat clicker
-    $("#attack").on("click", function(){
-        
+    $(document).on("click", "#attack", function(){
+        console.log("attack!")
+        game.combat();
         game.combatCheck();
     })
 
