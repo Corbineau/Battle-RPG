@@ -64,7 +64,7 @@ var game = {
         if (oppId != this.player.id) {
             //set the active opponent; add constructor logic
             if (oppId === "dw") {
-                this.activeOpponent = new Opponent("Dungeon World", 289,52, healthDiv);
+                this.activeOpponent = new Opponent("Dungeon World", 289, 63, healthDiv);
                 this.oppHandle = $("#1w").detach();
             } else if (oppId === "paranoia") {
                 this.activeOpponent = new Opponent("Paranoia", 520, 30, healthDiv);

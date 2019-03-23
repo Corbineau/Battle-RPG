@@ -21,44 +21,57 @@
 
 <body>
     <header class="font-effect-outline">
-       <h1> RPG Battle </h1>
+        <h1> RPG Battle </h1>
     </header>
-    <div class="container">
-        <p class="message" id="charMessage">
-            You must choose.
-        </p>
-        <div class="gamefield" id="charset">
-            <div class="charWrap" id="1w"><img src="assets/images/dungeonWorld.png" class="character" id="dw" />
-                <span class="hp" id="hp1">hp: 289</span>
-            </div>
-            <div class="charWrap" id="2w"><img src="assets/images/paranoia.png" class="character" id="paranoia" />
-                <span class="hp" id="hp2">hp: 520</span>
-            </div>
-            <div class="charWrap" id="3w"><img src="assets/images/Fate.png" class="character" id="fate" />
-                <span class="hp" id="hp3">hp: 333</span>
-            </div>
-            <div class="charWrap" id="4w"><img src="assets/images/dungeonsAndDragons.png" class="character" id="dnd" />
-                <span class="hp" id="hp4">hp: 751</span>
-            </div>
-        </div>
 
-        <div class="gamefield" id="battlefield">
-            <span class="fighter" id="player">
+    <div class="container">
+        <div class="sidebar" id="left"><img src="assets/images/dice.png" /></div>
+        <div class="gameContent">
+            <p class="message" id="charMessage">
+                You must choose.
+            </p>
+            <div class="gamefield" id="charset">
+                <div class="charWrap" id="1w"><img src="assets/images/dungeonWorld.png" class="character" id="dw" />
+                    <span class="hp" id="hp1">hp: 289</span>
+                </div>
+                <div class="charWrap" id="2w"><img src="assets/images/paranoia.png" class="character" id="paranoia" />
+                    <span class="hp" id="hp2">hp: 520</span>
+                </div>
+                <div class="charWrap" id="3w"><img src="assets/images/Fate.png" class="character" id="fate" />
+                    <span class="hp" id="hp3">hp: 333</span>
+                </div>
+                <div class="charWrap" id="4w"><img src="assets/images/dungeonsAndDragons.png" class="character"
+                        id="dnd" />
+                    <span class="hp" id="hp4">hp: 751</span>
+                </div>
+            </div>
+
+            <div class="gamefield" id="battlefield">
+                <span class="fighter" id="player">
                     <p>Player</p>
 
-            </span> 
-            <span class="fighter" id="opponent">
-                <p>Opponent</p>
+                </span>
+                <span class="fighter" id="opponent">
+                    <p>Opponent</p>
 
-            </span>
+                </span>
 
 
-
+                
+            </div>
+            <p class="message" id="gameMessage"></p>
         </div>
-        <p class="message" id="gameMessage">
 
-            </p>
+        <div class="sidebar" id="right">
+            <img src="assets/images/dice.png" />
+        </div>
     </div>
+    <footer>
+            <p>
+                copyright &#169;
+            </p>
+    </footer>
+
 
     <script src="assets/js/game.js"></script>
 
