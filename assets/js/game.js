@@ -1,10 +1,11 @@
 
 
 
-function Character(name, healthPoints, attackPower, id, healthDiv) {
+function Character(name, healthPoints, baseAttackPower, id, healthDiv) {
     this.charName = name;
     this.healthPoints = healthPoints;
-    this.attackPower = attackPower;
+    this.baseAttackPower = baseAttackPower;
+    this.attackPower = baseAttackPower;
     this.id = id;
     this.healthDiv = healthDiv;
 }
@@ -24,6 +25,8 @@ var game = {
     activeOpponent: "",
     availableOpponents: 3,
     oppHandle: "",
+    resetChars: "",
+
 
 
 
@@ -31,23 +34,24 @@ var game = {
         //start the game
         this.gameOn = true;
         console.log(this.gameOn);
+        this.resetChars = $("#charset").clone();
         //set the character; add constructor logic; move the image to the battlefield
         if (charId === "dw") {
-            this.player = new Character("Dungeon World", 245, 11, charId, healthDiv);
+            this.player = new Character("Dungeon World", 289, 30, charId, healthDiv);
             var charImg = $("#1w").detach();
-            charImg.appendTo("#battlefield");
+            charImg.appendTo("#player");
         } else if (charId === "paranoia") {
-            this.player = new Character("Fate", 520, 9, charId, healthDiv);
+            this.player = new Character("Fate", 520, 15, charId, healthDiv);
             var charImg = $("#2w").detach();
-            charImg.appendTo("#battlefield");
+            charImg.appendTo("#player");
         } else if (charId === "fate") {
-            this.player = new Character("Paranoia", 333, 2, charId, healthDiv);
+            this.player = new Character("Paranoia", 333, 19, charId, healthDiv);
             var charImg = $("#3w").detach();
-            charImg.appendTo("#battlefield");
+            charImg.appendTo("#player");
         } else if (charId === "dnd") {
-            this.player = new Character("Dungeons & Dragons", 750, 10, charId, healthDiv);
+            this.player = new Character("Dungeons & Dragons", 751, 9, charId, healthDiv);
             var charImg = $("#4w").detach();
-            charImg.appendTo("#battlefield");
+            charImg.appendTo("#player");
         }
         console.log(this.player);
         //change the game message to ask player to pick an opponent
@@ -60,22 +64,22 @@ var game = {
         if (oppId != this.player.id) {
             //set the active opponent; add constructor logic
             if (oppId === "dw") {
-                this.activeOpponent = new Opponent("Dungeon World", 245, 25, healthDiv);
+                this.activeOpponent = new Opponent("Dungeon World", 289,52, healthDiv);
                 this.oppHandle = $("#1w").detach();
             } else if (oppId === "paranoia") {
-                this.activeOpponent = new Opponent("Paranoia", 520, 35, healthDiv);
+                this.activeOpponent = new Opponent("Paranoia", 520, 30, healthDiv);
                 this.oppHandle = $("#2w").detach();
             } else if (oppId === "fate") {
-                this.activeOpponent = new Opponent("Fate", 333, 50, healthDiv);
+                this.activeOpponent = new Opponent("Fate", 333, 19, healthDiv);
                 this.oppHandle = $("#3w").detach();
             } else if (oppId === "dnd") {
-                this.activeOpponent = new Opponent("Dungeons & Dragons", 750, 50, healthDiv);
+                this.activeOpponent = new Opponent("Dungeons & Dragons", 751, 40, healthDiv);
                 this.oppHandle = $("#4w").detach();
             }
 
         }
         //move the opponent to the battlefield
-        this.oppHandle.appendTo("#battlefield");
+        this.oppHandle.appendTo("#opponent");
         //reduce the number of available opponents
         this.availableOpponents--;
         console.log(this.activeOpponent, `you have ${this.availableOpponents} left to fight.`);
@@ -93,14 +97,14 @@ var game = {
         this.activeOpponent.healthPoints = (this.activeOpponent.healthPoints - this.player.attackPower);
         //If the opponent isn't dead, they can counterattack; update everyone's health
         if (this.activeOpponent.healthPoints >= 0) {
-            this.activeOpponent.healthDiv.text(this.activeOpponent.healthPoints);
+            this.activeOpponent.healthDiv.text(`hp: ${this.activeOpponent.healthPoints}`);
             this.player.healthPoints = (this.player.healthPoints - this.activeOpponent.counterAttackPower);
-            this.player.healthDiv.text(this.player.healthPoints);
+            this.player.healthDiv.text(`hp: ${this.player.healthPoints}`);
             //update attack power only if the opponent isn't dead
-            this.player.attackPower = (this.player.attackPower + this.player.attackPower);
+            this.player.attackPower = (this.player.attackPower + this.player.baseAttackPower);
         } else if (this.activeOpponent.healthPoints <= 0) {
             //avoid showing overkill
-            this.activeOpponent.healthDiv.text("0");
+            this.activeOpponent.healthDiv.text("hp: 0");
         }
 
         console.log(this.player.attackPower);
@@ -109,20 +113,20 @@ var game = {
     combatCheck: function () {
         if (this.player.healthPoints <= 0) {
             this.activeOpponent = "";
-            this.player.healthDiv.text("0");
+            this.player.healthDiv.text("hp: 0");
             $("#attack").attr("id", "restart").text("restart");
-            $("#charMessage").text("Game Over! Click restart to try again.");
+            $("#charMessage").text("You have chosen... poorly. Click restart to try again.");
         } else if ((this.activeOpponent.healthPoints <= 0) && (this.availableOpponents > 0)) {
             $(this.oppHandle).detach();
             this.activeOpponent = "";
             this.oppHandle = "";
-            $("#charMessage").text("Well done! Choose your next opponent.");
+            $("#charMessage").text("You must choose... your next opponent.");
         } else if ((this.activeOpponent.healthPoints <= 0)) {
             $(this.oppHandle).detach();
             this.activeOpponent = "";
             this.oppHandle = "";
             $("#attack").attr("id", "restart").text("restart");
-            $("#charMessage").text("You win! Click restart to play again!");
+            $("#charMessage").text("You have chosen... wisely. Click restart to play again!");
         }
     },
 
@@ -130,11 +134,12 @@ var game = {
         this.gameOn = false;
         this.player = "";
         this.availableOpponents = 3;
-       // $("document").replaceWith(startState.clone(true));
-       //$(".character").detach();
-       //$(".character").appendTo("#charset");
-       location.reload(true);
-       $("#charMessage").text("Welcome back! Choose your character.");
+        $(".charWrap").detach();
+        $("button").remove();
+        $("#charset").replaceWith(this.resetChars);
+        this.resetChars= "";
+       //location.reload(true);
+       $("#charMessage").text("Choose again. Choose Wisely.");
 
     },
 }
@@ -143,7 +148,7 @@ $(document).ready(function () {
 
 
     //choose the player character
-    $(".character").on("click", function () {
+    $(document).on("click", ".character", function () {
         if (game.gameOn === false) {
             var charId = $(this).attr("id");
             var healthDiv = $(`#${$(this).siblings('.hp').attr('id')}`);
@@ -170,7 +175,7 @@ $(document).ready(function () {
         console.log("resetting", game);
     });
 
-    //var startState = $("document").clone(true);
+    //let startState = $(document).clone(true);
 
 })
 
