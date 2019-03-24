@@ -40,16 +40,16 @@ var game = {
             this.player = new Character("Dungeon World", 289, 30, charId, healthDiv);
             var charImg = $("#1w").detach();
             charImg.appendTo("#player");
-        } else if (charId === "paranoia") {
-            this.player = new Character("Fate", 520, 15, charId, healthDiv);
-            var charImg = $("#2w").detach();
-            charImg.appendTo("#player");
         } else if (charId === "fate") {
-            this.player = new Character("Paranoia", 333, 19, charId, healthDiv);
+            this.player = new Character("Fate", 520, 25, charId, healthDiv);
             var charImg = $("#3w").detach();
             charImg.appendTo("#player");
+        } else if (charId === "paranoia") {
+            this.player = new Character("Paranoia", 333, 45, charId, healthDiv);
+            var charImg = $("#2w").detach();
+            charImg.appendTo("#player");
         } else if (charId === "dnd") {
-            this.player = new Character("Dungeons & Dragons", 751, 9, charId, healthDiv);
+            this.player = new Character("Dungeons & Dragons", 751, 7, charId, healthDiv);
             var charImg = $("#4w").detach();
             charImg.appendTo("#player");
         }
@@ -64,7 +64,7 @@ var game = {
         if (oppId != this.player.id) {
             //set the active opponent; add constructor logic
             if (oppId === "dw") {
-                this.activeOpponent = new Opponent("Dungeon World", 289, 63, healthDiv);
+                this.activeOpponent = new Opponent("Dungeon World", 289, 70, healthDiv);
                 this.oppHandle = $("#1w").detach();
             } else if (oppId === "paranoia") {
                 this.activeOpponent = new Opponent("Paranoia", 520, 30, healthDiv);
@@ -73,7 +73,7 @@ var game = {
                 this.activeOpponent = new Opponent("Fate", 333, 19, healthDiv);
                 this.oppHandle = $("#3w").detach();
             } else if (oppId === "dnd") {
-                this.activeOpponent = new Opponent("Dungeons & Dragons", 751, 40, healthDiv);
+                this.activeOpponent = new Opponent("Dungeons & Dragons", 751, 50, healthDiv);
                 this.oppHandle = $("#4w").detach();
             }
 
